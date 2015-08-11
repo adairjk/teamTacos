@@ -1,18 +1,19 @@
 var app = angular.module('contactCards', []);
 app.controller('cardsCtrl', function($scope, $http) {
-    $http.get("./allCards")
+    $http.get("./contacts")
         .success(function(response){
-            for(contact in response['contacts']) {
-                var email = response['contacts'][contact]['email'];
+            console.log(response)
+            for(contact in response) {
+                var email = response['email'];
                 if(email){
                      var hash = md5(email);
-                    response['contacts'][contact]['image'] = "http://www.gravatar.com/avatar/" + hash;
+                    response['image'] = "http://www.gravatar.com/avatar/" + hash;
                 } else {
-                    response['contacts'][contact]['image'] = "images/no-image.png";
+                    response['image'] = "images/no-image.png";
                 }
             }
 
 
-            $scope.cards = response['contacts'];
+            $scope.cards = response;
         });
 });
